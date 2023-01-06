@@ -19,8 +19,8 @@ spec:
         - containerPort: 80
         volumeMounts:
           - name: configmap-rest-api
-            mountPath: /rest-api/rest-api.json
-            subPath: rest-api.json
+            mountPath: /app/appsettings.json
+            subPath: appsettings.json
       volumes:
         - name: configmap-rest-api
           configMap:

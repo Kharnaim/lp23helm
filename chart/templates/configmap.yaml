@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: configmap-rest-api
 data:
-  rest-api.json: |-
+  appsettings.json: |-
    {
      "Version": "{{.Values.RestAPI.version}}"
    }
