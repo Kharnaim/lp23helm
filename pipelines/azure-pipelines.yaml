@@ -41,7 +41,7 @@ stages:
               azureSubscription: 'AZURE_PROMEO'
               azureResourceGroup: '2023_promeo'
               kubernetesCluster: lp2023
-              namespace: LucasYann
+              namespace: lucasroutier
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
@@ -70,7 +70,7 @@ stages:
               azureSubscription: 'AZURE_PROMEO'
               azureResourceGroup: '2023_Promeo_2'
               kubernetesCluster: 'lp2023_1'
-              namespace: LucasYann
+              namespace: lucasroutier
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
