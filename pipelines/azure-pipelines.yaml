@@ -16,7 +16,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: chart'
       inputs:
-        PathtoPublish: "/app/appsettings.json"
+        PathtoPublish: chart
         ArtifactName: LucasYann
 
 - stage: DEV
