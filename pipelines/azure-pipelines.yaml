@@ -18,7 +18,7 @@ stages:
       displayName: 'Publish Artifact: chart'
       inputs:
         PathtoPublish: chart
-        ArtifactName: LucasYann
+        ArtifactName: chart
 
 - stage: DEV
   dependsOn: Package
@@ -33,7 +33,7 @@ stages:
           - task: DownloadBuildArtifacts@1
             displayName: 'Download Build Artifacts'
             inputs:
-              artifactName: Dev
+              artifactName: chart
               downloadPath: '$(Pipeline.Workspace)'
           - task: HelmDeploy@0
             displayName: 'helm upgrade'
@@ -45,7 +45,7 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
-              valueFile: 'key1=val1'
+              valueFile: 'app1.version=development'
               releaseName: v1
               force: true
 
@@ -62,7 +62,7 @@ stages:
           - task: DownloadBuildArtifacts@1
             displayName: 'Download Build Artifacts'
             inputs:
-              artifactName: Prod
+              artifactName: chart
               downloadPath: '$(Pipeline.Workspace)'
           - task: HelmDeploy@0
             displayName: 'helm upgrade'
@@ -74,6 +74,6 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
-              valueFile: 'key1=val1'
+              valueFile: 'app1.version=prod'
               releaseName: v1
               force: true
