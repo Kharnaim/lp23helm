@@ -18,7 +18,7 @@ stages:
       displayName: 'Publish Artifact: chart'
       inputs:
         PathtoPublish: chart
-        ArtifactName: erwan-package
+        ArtifactName: chart
 
 - stage: DEV
   dependsOn: Package
@@ -33,7 +33,7 @@ stages:
           - task: DownloadBuildArtifacts@1
             displayName: 'Download Build Artifacts'
             inputs:
-              artifactName: erwan-rest-api-dev
+              artifactName: chart
               downloadPath: '$(Pipeline.Workspace)'
           - task: HelmDeploy@0
             displayName: 'helm upgrade'
@@ -62,7 +62,7 @@ stages:
           - task: DownloadBuildArtifacts@1
             displayName: 'Download Build Artifacts'
             inputs:
-              artifactName: erwan-rest-prod
+              artifactName: chart
               downloadPath: '$(Pipeline.Workspace)'
           - task: KubectlInstaller@0
             displayName: 'Install Kubectl latest'
@@ -74,7 +74,7 @@ stages:
               azureResourceGroup: '2023_Promeo_2'
               kubernetesCluster: 'lp2023_1'
               command: create
-              arguments: 'erwan-ns'
+              arguments: 'ns erwan-ns'
             continueOnError: true
           - task: HelmDeploy@0
             displayName: 'helm upgrade'
