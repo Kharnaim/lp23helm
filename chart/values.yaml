@@ -1,1 +1,4 @@
-namespace: thomas-clement
+RestAPI:
+    namespace: thomas-clement
+    replicas: 3
+    version: dev

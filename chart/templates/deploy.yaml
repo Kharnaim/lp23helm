@@ -3,7 +3,7 @@ kind: Deployment
 metadata: 
   name: rest-api
 spec:
-  replicas: 3
+  replicas: {{ .Values.RestAPI.replicas }}
   selector:
     matchLabels:
       app: rest-api
@@ -17,5 +17,13 @@ spec:
         image: acrlp22.azurecr.io/promeoapi:v1
         ports:
         - containerPort: 80
+        volumeMounts:
+          - name: configmap-rest-api
+            mountPath: /rest-api/rest-api.json
+            subPath: rest-api.json
+      volumes:
+        - name: configmap-rest-api
+          configMap:
+            name: configmap-rest-api
       imagePullSecrets:
         - name: acrlp22.azurecr.io
