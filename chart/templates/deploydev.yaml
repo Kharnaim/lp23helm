@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lucasyanndev
+  labels:
+    app: volumedev
+spec:
+  replicas: {{.Values.App1.replica}}
+  selector:
+    matchLabels:
+      app: volumedev
+  template:
+    metadata:
+      labels:
+        app: volumedev
+    spec:
+      containers:
+      - name: volumedev
+        image: acrlp22.azurecr.io/promeoapi
+        ports:
+        - containerPort: 80
+          name: "http-server"
+        volumeMounts:
+        - name: volumedev
+          mountPath: "/app/appsettings.json"
+          subPath: "appsettings.json"
+      volumes:
+      - name: volumedev
+        configMap:
+          name: configmap-lucasyann
+      imagePullSecrets:
+        - name: acr-secret
