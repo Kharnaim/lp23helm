@@ -74,6 +74,6 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
-              valueFile: 'App1.version=prod'
+              valueFile: 'App1.version'
               releaseName: v1
               force: true
