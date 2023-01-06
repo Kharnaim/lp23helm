@@ -19,12 +19,6 @@ stages:
       inputs:
         PathtoPublish: https://github.com/tcharrier/lp23helm/tree/thomas-clement/chart
         ArtifactName: rest-api
-    - task: CreateNamespace@1
-      inputs:
-        command: kubectl create namespace dev-thomas-clement
-    - task: CreateNamespace@2
-      inputs:
-        command: kubectl create namespace prod-thomas-clement
 
 - stage: DEV
   dependsOn: Package
@@ -51,7 +45,7 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
-              valueFile: 'RestAPI.version=dev'
+              overrideValues: 'RestAPI.version=dev'
               releaseName: dev
               force: true
 
@@ -62,7 +56,7 @@ stages:
   - deployment:
     environment: prod 
     strategy:
-      runOnce:              
+      runOnce:
         deploy:    
           steps:
           - task: DownloadBuildArtifacts@1
@@ -70,6 +64,18 @@ stages:
             inputs:
               artifactName: rest-api
               downloadPath: '$(Pipeline.Workspace)'
+          - task: KubectlInstaller@0
+            displayName: 'Install Kubectl latest'
+          - task: Kubernetes@1
+            displayName: 'kubectl create namespace'
+            inputs:
+              connectionType: 'Azure Resource Manager'
+              azureSubscriptionEndpoint: 'AZURE_PROMEO'
+              azureResourceGroup: '2023_Promeo_2'
+              kubernetesCluster: 'lp2023_1'
+              command: create
+              arguments: 'ns prod-thomas-clement'
+            continueOnError: true
           - task: HelmDeploy@0
             displayName: 'helm upgrade'
             inputs:
@@ -80,6 +86,6 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
-              valueFile: 'RestAPI.version=prod'
+              overrideValues: 'RestAPI.version=prod'
               releaseName: prod
               force: true
