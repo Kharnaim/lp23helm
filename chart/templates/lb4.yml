@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rest-api-app
+spec:
+  selector:
+    app: rest-api-app #Nom du "deployment" pour le pointer correctement
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80

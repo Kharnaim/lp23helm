@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: erwan-exam
+  labels:
+    app: rest-api-app
+spec:
+  replicas: {{.Values.App1.CustomReplicas}}
+  selector:
+    matchLabels:
+      app: rest-api-app #Nom pour pointer avec le loadbalancer, SVC 
+  template:
+    metadata:
+      labels:
+        app: rest-api-app #Nom pour pointer avec le loadbalancer, SVC 
+    spec:
+      volumes:
+        - name: configmap-appsettings
+          configMap:
+            name: configmap-appsettings
+      containers:
+      - name: rest-api
+        image: acrlp22.azurecr.io/promeoapi
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: configmap-appsettings
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+      imagePullSecrets:
+        - name: acr-secret

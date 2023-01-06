@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-appsettings
+data:
+  appsettings.json: |-
+   {
+     "Version": "{{.Values.App1.version}}"
+   }
