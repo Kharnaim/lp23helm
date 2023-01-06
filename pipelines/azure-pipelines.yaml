@@ -45,7 +45,7 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
-              valueFile: 'App1.version=Development'
+              valueFile: 'version=Development'
               releaseName: erwan-rest-api-dev
               force: true
 
@@ -86,6 +86,6 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: $(Pipeline.Workspace)/chart
-              valueFile: 'App1.version=Prod'
+              valueFile: 'version=Prod'
               releaseName: erwan-rest-api-prod
               force: true
