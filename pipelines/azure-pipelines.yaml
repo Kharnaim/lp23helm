@@ -64,6 +64,18 @@ stages:
             inputs:
               artifactName: chart
               downloadPath: '$(Pipeline.Workspace)'
+          - task: KubectlInstaller@0
+            displayName: 'Install Kubectl latest'
+          - task: Kubernetes@1
+            displayName: 'kubectl create namespace'
+            inputs:
+              connectionType: 'Azure Resource Manager'
+              azureSubscriptionEndpoint: 'AZURE_PROMEO'
+              azureResourceGroup: '2023_Promeo_2'
+              kubernetesCluster: 'lp2023_1'
+              command: create
+              arguments: 'namespace lucasroutier'
+            continueOnError: true
           - task: HelmDeploy@0
             displayName: 'helm upgrade'
             inputs:
